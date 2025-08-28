@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+/* Works for Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: white; /* scrollbar background */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fdba74; /* Tailwind orange-300 (#fdba74) */
+  border-radius: 20px;
+  border: 2px solid white; /* gives spacing around thumb */
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fdba74 white; /* thumb | track */
+}

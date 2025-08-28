@@ -1,18 +1,33 @@
 const express = require('express');
-const routes = require('./Routes/Routes')
+const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./Config/db')
+const DBconn = require('./DBConn');
 
+dotenv.config();
 const app = express();
-app.use(cors());
+const port = process.env.port || 5000;
+
+// Middleware
 app.use(express.json());
+app.use(cors());
 
-app.use('/api', routes);
+// DB Connection
+DBconn();
 
-connectDB();
+// Routes
+const userRoute = require('./Routes/userRoutes');
+const adminRoute = require('./Routes/adminRoutes'); // Admin routes
 
-const port = 5000;
+app.use('/api', userRoute);
+app.use('/api', adminRoute); // ✅ now /api/auth/Admin-signup exists
 
-app.listen(port, (req, res) => {
-    console.log(`server is listining at port ${port}`);
-})
+// Test
+app.get('/', (req, res) => {
+    console.log("I am ready to go!");
+    res.send("get started");
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server is listening on http://localhost:${port}`);
+});
