@@ -16,10 +16,15 @@ DBconn();
 
 // Routes
 const userRoute = require('./Routes/userRoutes');
-const adminRoute = require('./Routes/adminRoutes'); // Admin routes
+const adminRoute = require('./Routes/adminRoutes'); 
+const subjectRoute = require('./Routes/Subjects');
+const subjectEnrollments = require('./Routes/enrollments')
 
 app.use('/api', userRoute);
-app.use('/api', adminRoute); // ✅ now /api/auth/Admin-signup exists
+app.use('/api', adminRoute); 
+app.use('/api', subjectRoute); 
+app.use('/api', subjectEnrollments);
+
 
 // Test
 app.get('/', (req, res) => {

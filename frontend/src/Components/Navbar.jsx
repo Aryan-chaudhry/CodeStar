@@ -36,7 +36,7 @@ function Navbar({ darkMode, setDarkMode }) {
             About
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to="/progress"
             className={({ isActive }) =>
@@ -45,7 +45,7 @@ function Navbar({ darkMode, setDarkMode }) {
           >
             Progress
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink
             to="/Mock"
@@ -64,6 +64,16 @@ function Navbar({ darkMode, setDarkMode }) {
             }
           >
             DSA
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/code-editor"
+            className={({ isActive }) =>
+              isActive ? "underline underline-offset-4" : ""
+            }
+          >
+            Code Editor
           </NavLink>
         </li>
       </ul>

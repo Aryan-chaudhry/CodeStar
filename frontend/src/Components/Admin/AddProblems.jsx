@@ -32,13 +32,19 @@ function AddProblem({ darkMode }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // validation
+    if (sampleTestCases.some(tc => !tc.input || !tc.output)) {
+      toast.error("Please fill all sample test cases!");
+      return;
+    }
+
     const problemData = {
       title,
       description,
       difficulty,
-      constraints,
-      inputFormat,
-      outputFormat,
+      constraints: constraints.split("\n").map(c => c.trim()).filter(c => c),
+      inputFormat: inputFormat.split("\n").map(f => f.trim()).filter(f => f),
+      outputFormat: outputFormat.split("\n").map(f => f.trim()).filter(f => f),
       sampleTestCases
     };
 
@@ -63,7 +69,7 @@ function AddProblem({ darkMode }) {
   };
 
   return (
-    <div className={darkMode ? "flex justify-center items-center min-h-screen p-6" : "flex justify-center items-center min-h-screen p-6"}>
+    <div className="flex justify-center items-center min-h-screen p-6">
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={darkMode ? "bg-black border border-orange-300 rounded-2xl shadow-lg p-10 w-[600px]" : "bg-white border border-orange-300 rounded-2xl shadow-lg p-10 w-[600px]"}>
         <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-orange-300 to-orange-500 bg-clip-text text-transparent drop-shadow-lg">
@@ -93,7 +99,7 @@ function AddProblem({ darkMode }) {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Problem Description"
               required
-              rows={4}
+              rows={5}
               className={darkMode
                 ? "w-full p-3 rounded-lg border border-orange-300 bg-black text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-300"
                 : "w-full p-3 rounded-lg border border-orange-300 bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-300"
@@ -119,11 +125,11 @@ function AddProblem({ darkMode }) {
 
           {/* Constraints */}
           <div>
-            <input
-              type="text"
+            <textarea
               value={constraints}
               onChange={(e) => setConstraints(e.target.value)}
-              placeholder="Constraints"
+              placeholder="Constraints (one per line)"
+              rows={2}
               className={darkMode
                 ? "w-full p-3 rounded-lg border border-orange-300 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-300"
                 : "w-full p-3 rounded-lg border border-orange-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-orange-300"
@@ -133,21 +139,21 @@ function AddProblem({ darkMode }) {
 
           {/* Input & Output Format */}
           <div>
-            <input
-              type="text"
+            <textarea
               value={inputFormat}
               onChange={(e) => setInputFormat(e.target.value)}
-              placeholder="Input Format"
+              placeholder="Input Format (one per line)"
+              rows={2}
               className={darkMode
                 ? "w-full p-3 rounded-lg border border-orange-300 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-300"
                 : "w-full p-3 rounded-lg border border-orange-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-orange-300"
               }
             />
-            <input
-              type="text"
+            <textarea
               value={outputFormat}
               onChange={(e) => setOutputFormat(e.target.value)}
-              placeholder="Output Format"
+              placeholder="Output Format (one per line)"
+              rows={2}
               className={darkMode
                 ? "w-full p-3 mt-2 rounded-lg border border-orange-300 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-300"
                 : "w-full p-3 mt-2 rounded-lg border border-orange-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-orange-300"
@@ -183,7 +189,7 @@ function AddProblem({ darkMode }) {
                 <button type="button" onClick={() => removeSampleTestCase(index)} className="text-red-500 font-bold">X</button>
               </div>
             ))}
-            <button type="button" onClick={addSampleTestCase} className="text-orange-400 font-semibold hover:underline">Add Test Case</button>
+            <button type="button" onClick={addSampleTestCase} className="text-orange-400 font-semibold hover:underline">+ Add Test Case</button>
           </div>
 
           {/* Submit Button */}

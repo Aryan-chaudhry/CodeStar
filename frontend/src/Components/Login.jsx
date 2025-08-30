@@ -1,8 +1,12 @@
     import React, { useState } from 'react'
-
+    import { NavLink } from 'react-router-dom';
+    import { toast, ToastContainer } from 'react-toastify';
+    import axios from "axios";
+    import { useNavigate } from "react-router-dom";
 
     function Login({ darkMode }) {
 
+        const navigate = useNavigate();
 
         const [Email, setEmil] = useState("");
         const [password, setPassword] = useState("");
@@ -21,17 +25,38 @@
             setRememberMe(!rememberMe);
         }
 
-        function handleSubmit(e){
-            e.preventDefault();
-           
-            console.log(Email)
-            console.log(password)
-            console.log(rememberMe)
-            
-            setEmil("");
-            setPassword("")
-            setRememberMe(false);
+       async function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = {
+            email: Email,
+            password: password
+        };
+
+        try {
+            const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+
+            if (res.status === 200) {
+                toast.success("You have been logged in 🎉");
+                setTimeout(() => {
+                    navigate("/");
+                }, 1500);
+            }
+
+        } catch (error) {
+            if (error.response?.status === 401) {
+                toast.error("Wrong email or password");
+            } else if (error.response?.status === 500) {
+                toast.error("Server error, please try again later ⚠️");
+            } else {
+                toast.error("Something went wrong");
+            }
         }
+
+        setEmil("");
+        setPassword("");
+    }
+
 
     return (
         <div
@@ -41,6 +66,7 @@
             : "flex justify-center items-center min-h-screen p-6"
         }
         >
+        <ToastContainer position="top-right" autoClose={3000} />
         {/* Card */}
         <div
             className={
@@ -133,6 +159,10 @@
                 >
                 Remember me
                 </label>
+            </div>
+
+            <div >
+                <NavLink to='/signup' className='text-red-600'>dont have any account?</NavLink>
             </div>
 
             {/* Submit Button */}

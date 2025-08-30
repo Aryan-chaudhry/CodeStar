@@ -14,10 +14,15 @@ import AdminSignUp from './Components/Admin/Signup'
 import Adminlogin from './Components/Admin/Login'
 import Admin from './Components/Admin/Admin'
 import AddProblem from './Components/Admin/AddProblems'
+import MockStreaming from './Components/MockStreaming'
+import CodeEditor from './Components/CodeEditor'
+import Subjects from './Components/Subjects'
+import Dashboard from './Components/Admin/Dashboard'
+
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const navigate = useNavigate();
 
   
@@ -25,12 +30,14 @@ function App() {
     <div className={  darkMode ? "dark bg-black h-screen   " : "bg-white h-screen"} >
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode}  />
         <Routes>
-          <Route path="/Admin/add-problem" element={<Admin darkMode={darkMode}/>} />
-          <Route path="/Admin/" element={<AddProblem darkMode={darkMode}/>} />
+          <Route path="/Admin/add-problem" element={<AddProblem darkMode={darkMode}/>} />
+          <Route path="/Admin" element={<Admin darkMode={darkMode}/>} />
+          <Route path="/Admin/dashboard" element={<Dashboard darkMode={darkMode}/>} />
           <Route path="/Admin/signup" element={<AdminSignUp darkMode={darkMode}/>} />
           <Route path="/Admin/login" element={<Adminlogin darkMode={darkMode}/>} />
+          <Route path="/Admin/add-subject" element={<Subjects darkMode={darkMode}/>} />
           <Route path="/" element={<Home darkMode={darkMode}/>} />
-          <Route path="/progress" element={<Progress darkMode={darkMode} />} />
+          {/* <Route path="/progress" element={<Progress darkMode={darkMode} />} /> */}
           <Route path="/about" element={<About darkMode={darkMode} />} />
           <Route path="/signup" element={<SignUp darkMode={darkMode} />} />
           <Route path="/login" element={<Login darkMode={darkMode} />} />
@@ -38,6 +45,9 @@ function App() {
           <Route path="/mock" element={<Mock darkMode={darkMode} />} />
           <Route path="/dsa" element={<DSA darkMode={darkMode} />} />
           <Route path="/dsa/sheet" element={<DSASheet darkMode={darkMode} />} />
+          <Route path="/mock/mock-streaming" element={<MockStreaming darkMode={darkMode} />} />
+          <Route path="/code-editor" element={<CodeEditor darkMode={darkMode} />} />
+
         </Routes>
     </div>  
     
